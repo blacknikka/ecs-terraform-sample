@@ -5,9 +5,13 @@ resource "aws_alb" "app" {
   name            = "elb-for-app-${var.app_name}"
   security_groups = [aws_security_group.load_balancers_ecs.id]
   subnets = [
-    var.subnet_for_app.id,
-    var.subnet_for_app2.id,
+    var.subnet_for_app_a.id,
+    var.subnet_for_app_c.id,
   ]
+
+  tags = {
+    Name = "ECS LB : ${var.app_name}"
+  }
 }
 
 resource "aws_alb_target_group" "alb_target_app" {
@@ -41,10 +45,11 @@ resource "aws_security_group" "load_balancers_ecs" {
   vpc_id      = var.vpc_main.id
 
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = var.ecs_container_port
+    to_port     = var.ecs_container_port
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    description = "allow ${var.ecs_container_port}"
   }
 
   egress {
