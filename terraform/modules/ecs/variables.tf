@@ -26,7 +26,7 @@ variable "ecs_execution_role" {}
 variable "vpc_main" {}
 
 # subnet 1 to exec the container
-variable "subnet_for_app" {}
+variable "subnet_for_app_a" {}
 
 # subnet 2 to exec the container
-variable "subnet_for_app2" {}
+variable "subnet_for_app_c" {}

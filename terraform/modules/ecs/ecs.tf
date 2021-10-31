@@ -31,14 +31,14 @@ resource "aws_ecs_service" "app" {
 
   network_configuration {
     subnets = [
-      var.subnet_for_app.id,
-      var.subnet_for_app2.id,
+      var.subnet_for_app_a.id,
+      var.subnet_for_app_c.id,
     ]
 
     security_groups = [
       aws_security_group.load_balancers_ecs.id,
     ]
 
-    assign_public_ip = true
+    assign_public_ip = false
   }
 }
