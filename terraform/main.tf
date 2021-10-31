@@ -33,11 +33,12 @@ module "ecs_cloudwatch" {
   retention_in_days = 30
 }
 
-# Execution role
-module "ecs_execution_role" {
-  source = "./modules/ecs-execution-role"
+# ECS role
+module "ecs_role" {
+  source = "./modules/ecs-role"
 
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  base_name  = var.base_name
 }
 
 # ECS cluster
@@ -80,8 +81,9 @@ module "app_ecs" {
   ecs_cluster          = module.ecs_cluster.ecs_cluster
   ecs_task_definition  = data.template_file.app_task_definition.rendered
   ecs_container_name   = "app"
-  ecs_container_port   = 8080
+  ecs_container_port   = 80
   lb_health_check_path = "/"
-  ecs_execution_role   = module.ecs_execution_role.execution_role
+  ecs_execution_role   = module.ecs_role.execution_role
+  ecs_task_role        = module.ecs_role.task_role
 
 }

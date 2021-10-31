@@ -6,6 +6,7 @@ resource "aws_ecs_task_definition" "app_task" {
   memory                = 512
   container_definitions = var.ecs_task_definition
   execution_role_arn    = var.ecs_execution_role.arn
+  task_role_arn         = var.ecs_task_role.arn
 
   requires_compatibilities = [
     "FARGATE",
@@ -41,4 +42,6 @@ resource "aws_ecs_service" "app" {
 
     assign_public_ip = false
   }
+
+  enable_execute_command = true
 }
