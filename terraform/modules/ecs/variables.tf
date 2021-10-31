@@ -22,6 +22,9 @@ variable "lb_health_check_path" {}
 # execution role
 variable "ecs_execution_role" {}
 
+# task role
+variable "ecs_task_role" {}
+
 # vpc to exec the container
 variable "vpc_main" {}
 
